@@ -1,0 +1,3 @@
+.idea
+etc/ssl/
+docker-compose.override.yml

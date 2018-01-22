@@ -1,0 +1,48 @@
+version: '3.5'
+services:
+
+    registry:
+      container_name: "docker-registry"
+      restart: always
+      image: registry:2
+      volumes:
+        - ./data:/var/lib/registry
+      networks:
+        - nginx_net
+      logging:
+        driver: json-file
+        options:
+          max-size: "10m"
+          max-file: "5"
+
+    nginx:
+      build: .
+      hostname: nginx
+      restart: always
+      container_name: nginx
+      logging:
+        driver: json-file
+        options:
+          max-size: "10m"
+          max-file: "5"
+      networks:
+        - nginx_net
+      volumes:
+        - ./etc/ssl:/etc/nginx/ssl
+#        - ./registry.domain.conf:/etc/nginx/service.conf
+      ports:
+        - "80:80"
+        - "443:443"
+      environment:
+        - TZ=America/Chicago
+        - LETSENCRYPT=true
+        - LE_EMAIL=change@to-your-email
+        - LE_FQDN=change-to-your.domain
+        - REGISTRY_USER=test
+        - REGISTRY_PASSWORD=test
+        #- SSL_CERT=le-crt.pem
+        #- SSL_KEY=le-key.pem
+
+networks:
+  nginx_net:
+    name: global-net
