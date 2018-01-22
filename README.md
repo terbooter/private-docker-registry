@@ -6,7 +6,7 @@ Simple nginx image (alpine based) with integrated [Let's Encrypt](https://letsen
 
 ## How to use
 * Provision server with docker supporting compose 3.5 version
-* Clone this repo ``
+* Clone this repo `git clone https://github.com/terbooter/private-docker-registry.git`
 * Create file `docker-compose.override.yml`
 with content
 ```
@@ -20,6 +20,3 @@ services:
         - REGISTRY_PASSWORD=docker-password
 ```
 * `docker-compose build && docker-compose up -d`
-
-#TODO replace domain name in registry.domain.conf file with sed cli editor
-add one more sh script to Dockerfile
